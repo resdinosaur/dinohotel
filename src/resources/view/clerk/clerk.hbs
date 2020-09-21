@@ -1,0 +1,110 @@
+
+<div class="mt-4 container">
+    <div class="">
+        <h1 class="title-page">Список клерков (Clerk)</h1>
+        <a href="/admin/clerk/trash" class="btn-funtion" id="check-empty-trash-btn" count="{{deletedCount}}">
+            <i class="far fa-trash-alt trash-icon">
+                <span class="count-deleted text-center">{{deletedCount}}</span>
+            </i>
+            <span class="trash-text">Корзина</span>
+        </a>
+    </div>
+
+    <table class="table mt-4 table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th class="text-center">Funtion</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each clerks}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.clerk_firstName}}</td>
+                <td>{{this.clerk_lastName}}</td>
+                <td>{{this.clerk_gender}}</td>
+                <td>{{this.clerk_address}}</td>
+                <td>{{this.clerk_phone}}</td>
+                <td class="text-center">
+                    <a href="/admin/clerk/{{this._id}}/edit" class="btn-funtion record-funtion">Edit</a>
+                    <a href="" class="btn-funtion record-funtion" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-clerk-modal">Delete</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td scope="row" colspan="7" class="text-center">Дат в списке нет.</td>
+            </tr>
+
+            {{/each}}
+
+            <tr>
+                <td colspan="7">
+                    <a href="/admin/clerk/create" class="btn-funtion">
+                        <i class="fas fa-plus-circle"></i>
+                        Создать нового клерка
+                    </a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-form" method="POST"></form>
+
+{{!-- Confirm delete clerk --}}
+<div id="delete-clerk-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удалить клерка (Clerk)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы уверены, что хотите удалить?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="btn-delete" type="button" class="btn btn-danger">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteId;
+        var deleteForm = document.forms['delete-form'];
+        
+        //check trash empty or has data?
+        var checkTrash = document.getElementById('check-empty-trash-btn');
+        if (checkTrash.getAttribute("count") == 0) {
+            checkTrash.setAttribute("style", "display: none;")
+        }
+
+        //when clicked btn delete
+        $('#delete-clerk-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteId = button.data('id');
+        })
+
+        //when clicked dialog confirm
+        var btnDelete = document.getElementById('btn-delete');
+        btnDelete.onclick = function() {
+            deleteForm.action = '/admin/clerk/' + deleteId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+
+    
+</script>

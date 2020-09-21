@@ -1,0 +1,179 @@
+@import 'variables';
+
+.title-page {
+    font-size: 1.4rem;
+    font-weight: 400;
+}
+
+.navbar {
+    z-index: 1;
+    // background-color: rgba(255,255,255, 0.5);
+    background-color: linear-gradient(to bottom, #fff 0%, rgba(255,255,255, 0));
+}
+
+//header
+.logo {
+    width: 250px;
+    z-index: 10;
+}
+
+// .nav-link {
+//     color: $primary-color;
+// }
+// .nav-link:hover {
+//     color: $primary-color;
+// }
+
+// .nav-item {
+//     position: relative;
+//     transition:color 0.25s ease;
+// }
+
+// .nav-item::after {
+//     position: absolute;
+//     content: '';
+//     top: 0;
+//     left: 0;
+//     width: 0;
+//     height: 100%;
+//     background-color: $primary-color;
+//     z-index: 0;
+// }
+
+// .nav-item:hover::after {
+//     width: 100%;
+//     transform-origin: left;
+//     transition: width 0.25s ease;
+// }
+
+.nav-ul {
+    margin-left: 20px;
+}
+
+.header-nav-link {
+    color: $primary-color;
+    text-decoration: none;
+    padding: 0 10px;
+    font-size: 1.1rem;
+    line-height: 2.2rem;
+    position: relative;
+    z-index: 1;
+    // z-index: 10;
+    // background-color: green;
+}
+
+.header-nav-link::after {
+    position: absolute;
+    content: '';
+    top: -10px;
+    left: -1px;
+    height: 200%;
+    width: 0;
+    background-color: $primary-color;
+    transition: all .3s ease;
+    z-index: -1;
+}
+.header-nav-link:hover {
+    color: white;
+    text-decoration: none;
+    z-index: 1;
+}
+
+.header-nav-link:hover::after {
+    width: 100%;
+    // transform-origin: left;
+    transition: all .5s ease;
+}
+
+.login {
+    padding-left: 30px;
+}
+
+.login:hover {
+    text-decoration: none;
+}
+
+
+
+.title-name-form {
+    padding-right: 10px;
+}
+
+.trash-icon {
+    position: relative;
+    // width: 15px;
+    // height: 15px;
+    font-size: 1.3rem;
+}
+.count-deleted {
+    // content: '';
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    z-index: 2;
+    background-color: $primary-color;
+    color: white;
+    font-size: 0.9rem;
+    line-height: normal;
+}
+
+.count-deleted:hover {
+    background-color: $primary-color-hover;
+}
+
+.trash-text {
+    margin-left: 10px;
+}
+
+.record-funtion {
+    margin-left: 20px;
+
+}
+
+.btn-funtion {
+    color: $primary-color;
+    
+}
+
+.btn-funtion:hover {
+    text-decoration: none;
+    color: $primary-color-hover;
+}
+
+.btn-submit {
+    background-color: $primary-color;
+    color: white;
+}
+
+.btn-submit:hover {
+    background-color: $primary-color-hover;
+}
+
+.item-gender {
+    margin: 0 4px 0 15px;
+}
+
+
+.form-doc {
+    display: flex;
+    // justify-content: center;
+}
+
+.form-doc-element {
+    display: flex;
+    padding: 10px 50px 0 0;
+}
+
+.form-doc-element-text {
+    margin-top: 6px;
+    margin-right: 10px;
+}
+
+
+.img-thumnair {
+    position: absolute;
+    top: 0;
+}

@@ -1,0 +1,106 @@
+
+<div class="mt-4 container">
+    <div class="">
+        <h1 class="title-page">Корзина тип комнат (Room Type)</h1>
+        <a href="/admin/room-type" class="btn-funtion">
+            <i class="fas fa-chevron-left"></i>
+            Вернуться к списку
+        </a>
+    </div>
+
+    <table class="table mt-4 table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Type name</th>
+                <th scope="col">Max adults</th>
+                <th scope="col">Max children</th>
+                <th scope="col">Price</th>
+                <th scope="col">Unit</th>
+                <th class="text-center">Function</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each room_types}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.room_type_name}}</td>
+                <td>{{this.max_adults}}</td>
+                <td>{{this.max_children}}</td>
+                <td>{{this.price}}</td>
+                <td>{{this.unit}}</td>
+                <td class="text-center">
+                    <a href="" class="btn-funtion record-funtion btn-restore" data-id="{{this._id}}">Восстановить</a>
+                    <a href="" class="btn-funtion record-funtion" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-roomType-modal">Удалить</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="7" class="text-center">Дат в корзине нет.</td>
+            </tr>
+
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-form" method="POST"></form>
+{{!-- Restore form hidden --}}
+<form name="restore-form" method="POST"></form>
+
+{{!-- Confirm delete room-type --}}
+<div id="delete-roomType-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удалить НАВСЕГДА тип комнаты (Room type)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы не можете восстановить это действие. Пожалуйста подумайте ещё раз. Вы уверены, что хотите <span style="font-weight: bold;">удалить навсегда</span>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="btn-delete" type="button" class="btn btn-danger">Удалить навсегда</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteId;
+        var deleteForm = document.forms['delete-form'];
+        var restoreForm = document.forms['restore-form'];
+        var btnRestore = $('.btn-restore');
+
+        //when clicked btn delete
+        $('#delete-roomType-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteId = button.data('id');
+        })
+
+        //when clicked dialog confirm
+        var btnDelete = document.getElementById('btn-delete');
+        btnDelete.onclick = function() {
+            deleteForm.action = '/admin/room-type/' + deleteId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        //restore btn clicked
+        btnRestore.click(function(e) {
+            e.preventDefault();
+
+            var restoreId = $(this).data('id');
+
+            restoreForm.action = '/admin/room-type/' + restoreId + '/restore?_method=PATCH';
+            restoreForm.submit();
+        });
+    });
+
+    
+</script>

@@ -1,0 +1,46 @@
+
+<div class="mt-4 container">
+    <h1 class="title-page">Создать новый тип комнаты (Room Type)</h1>
+
+    <form method="POST" action="/admin/room-type/store" >
+        {{!-- Room type name --}}
+        <div class="form-group">
+            <label for="room_type_name" class="font-weight-bold">Room type name</label>
+            <input type="text" class="form-control" name="room_type_name">
+        </div>
+
+        {{!-- Max adults --}}
+        <div class="form-group">
+            <label for="max_adults" class="font-weight-bold">Max adults</label>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="number" name="max_adults">
+            </div>
+        </div>
+
+        {{!-- Max children --}}
+        <div class="form-group">
+            <label for="max_children" class="font-weight-bold">Max children</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="number" name="max_children">
+            </div>
+        </div>
+
+        {{!-- Price --}}
+        <div class="form-group">
+            <label for="price" class="font-weight-bold">Price</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="number" name="price">
+            </div>
+        </div>
+
+        {{!-- Unit --}}
+        <div class="form-group">
+            <label for="unit" class="font-weight-bold">Unit</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" name="unit">
+        </div>
+        
+        <button type="submit" class="btn btn-submit">Create</button>
+    </form>
+
+</div>

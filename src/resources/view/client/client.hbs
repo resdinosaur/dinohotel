@@ -1,0 +1,129 @@
+
+<div class="mt-4 container-fluid">
+    <div class="">
+        <h1 class="title-page">Список клиентов (Client)</h1>
+        <a href="/admin/client/trash" class="btn-funtion" id="check-empty-trash-btn" count="{{deletedCount}}">
+            <i class="far fa-trash-alt trash-icon">
+                <span class="count-deleted text-center">{{deletedCount}}</span>
+            </i>
+            <span class="trash-text">Корзина</span>
+        </a>
+    </div>
+
+    <table class="table mt-4 table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Mail</th>
+                <th scope="col">Nationality</th>
+                <th scope="col">Document</th>
+                <th scope="col">Number</th>
+                <th scope="col">Validity</th>
+                <th class="text-center">Funtion</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each clients}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.client_firstName}}</td>
+                <td>{{this.client_lastName}}</td>
+                <td>{{this.client_gender}}</td>
+                <td>{{this.client_address}}</td>
+                <td>{{this.client_phone}}</td>
+                <td>{{this.client_mail}}</td>
+                <td>{{this.client_nationality}}</td>
+                <td>{{this.client_doc}}</td>
+                <td>{{this.client_number}}</td>
+                <td class="date" date="{{this.client_validity}}"></td>
+                <td class="text-center">
+                    <a href="/admin/client/{{this._id}}/edit" class="btn-funtion record-funtion">Edit</a>
+                    <a href="" class="btn-funtion record-funtion" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-client-modal">Delete</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td scope="row" colspan="12" class="text-center">Дат в списке нет.</td>
+            </tr>
+
+            {{/each}}
+
+            <tr>
+                <td colspan="12">
+                    <a href="/admin/client/create" class="btn-funtion">
+                        <i class="fas fa-plus-circle"></i>
+                        Создать нового клиентов
+                    </a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-form" method="POST"></form>
+
+{{!-- Confirm delete client --}}
+<div id="delete-client-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удалить клиентов (Client)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы уверены, что хотите удалить?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="btn-delete" type="button" class="btn btn-danger">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        var deleteId;
+        var deleteForm = document.forms['delete-form'];
+        
+        //check trash empty or has data?
+        var checkTrash = document.getElementById('check-empty-trash-btn');
+        if (checkTrash.getAttribute("count") == 0) {
+            checkTrash.setAttribute("style", "display: none;")
+        }
+
+        //reformat date validity
+        var dateValidity = document.getElementsByClassName('date');
+        for (var i = 0; i < dateValidity.length; i++) {
+            var date = new Date(dateValidity[i].getAttribute('date'));
+            var dateStr = date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+            dateValidity[i].innerText = dateStr;
+        }
+
+        //when clicked btn delete
+        $('#delete-client-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteId = button.data('id');
+        })
+
+        //when clicked dialog confirm
+        var btnDelete = document.getElementById('btn-delete');
+        btnDelete.onclick = function() {
+            deleteForm.action = '/admin/client/' + deleteId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+
+    
+</script>

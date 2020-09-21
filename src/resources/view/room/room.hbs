@@ -1,0 +1,128 @@
+
+<div class="mt-4 container">
+    <div class="">
+        <h1 class="title-page">Список комнат (Room)</h1>
+        <a href="/admin/room/trash" class="btn-funtion" id="check-empty-trash-btn" count="{{deletedCount}}">
+            <i class="far fa-trash-alt trash-icon">
+                <span class="count-deleted text-center">{{deletedCount}}</span>
+            </i>
+            <span class="trash-text">Корзина</span>
+        </a>
+    </div>
+
+    <table class="table mt-4 table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Room number</th>
+                <th scope="col">Room type</th>
+                <th scope="col">Room situation</th>
+                <th class="text-center">Funtion</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each rooms}} 
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.room_number}}</td>
+                <td class="room-type-id" roomTypeId="{{this.room_type_id}}"></td>
+                <td>{{this.room_situation}}</td>
+                <td class="text-center">
+                    <a href="/admin/room/{{this._id}}/edit" class="btn-funtion record-funtion">Edit</a>
+                    <a href="" class="btn-funtion record-funtion" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-room-modal">Delete</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td scope="row" colspan="5" class="text-center">Дат в списке нет.</td>
+            </tr>
+
+            {{/each}}
+
+            <tr>
+                <td colspan="5">
+                    <a href="/admin/room/create" class="btn-funtion">
+                        <i class="fas fa-plus-circle"></i>
+                        Создать новый комнат
+                    </a>
+                </td>
+            </tr>
+
+        </tbody>
+    </table>
+
+    <div class="data-room-type-hidden" style="display: none;">
+        {{#each room_types}}
+            <span class="data-room-rype" data-roomTypeId="{{this._id}}" data-roomTypeName="{{this.room_type_name}}"></span>
+        {{/each}}
+    </div>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-form" method="POST"></form>
+
+{{!-- Confirm delete room --}}
+<div id="delete-room-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удалить комнату (Room)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы уверены, что хотите удалить?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="btn-delete" type="button" class="btn btn-danger">Удалить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteId;
+        var deleteForm = document.forms['delete-form'];
+        
+        //get room_type_name 
+        var roomTypeId_roomClt = document.getElementsByClassName('room-type-id');
+        var roomTypeId_roomTypeClt = document.getElementsByClassName('data-room-rype');
+
+        for (var i = 0; i < roomTypeId_roomClt.length; i++) {
+            for (var j = 0; j < roomTypeId_roomTypeClt.length; j++) {
+                if (roomTypeId_roomClt[i].getAttribute('roomTypeId') == roomTypeId_roomTypeClt[j].getAttribute('data-roomTypeId')) {
+                    var text = roomTypeId_roomTypeClt[j].getAttribute('data-roomTypeName');
+                    roomTypeId_roomClt[i].innerText = text;
+                    break;
+                }
+            }
+        }
+        
+
+        //check trash empty or has data?
+        var checkTrash = document.getElementById('check-empty-trash-btn');
+        if (checkTrash.getAttribute("count") == 0) {
+            checkTrash.setAttribute("style", "display: none;")
+        }
+
+        //when clicked btn delete
+        $('#delete-room-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteId = button.data('id');
+            //console.log(deleteId)
+        })
+
+        //when clicked dialog confirm
+        var btnDelete = document.getElementById('btn-delete');
+        btnDelete.onclick = function() {
+            deleteForm.action = '/admin/room/' + deleteId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+
+    
+</script>

@@ -1,0 +1,93 @@
+<div class="mt-4 container mb-4">
+    <h1 class="title-page">Редактировать клиента (Client)</h1>
+
+    <form method="POST" action="/admin/client/{{client._id}}/?_method=PUT">
+        {{!-- Client first name --}}
+        <div class="form-group">
+            <label for="client_firstName" class="font-weight-bold">First name</label>
+            <input type="text" class="form-control" name="client_firstName" value="{{client.client_firstName}}">
+        </div>
+
+        {{!-- Client last name --}}
+        <div class="form-group">
+            <label for="client_lastName" class="font-weight-bold">Last name</label>
+            <input type="text" class="form-control" name="client_lastName" value="{{client.client_lastName}}">
+        </div>
+
+        {{!-- Client gender --}}
+        <div class="form-group">
+            <label for="client_gender" class="font-weight-bold">Gender</label>
+            <input class="item-gender" type="radio" name="client_gender" id="male" value="male"> Male
+            <input class="item-gender" type="radio" name="client_gender" id="female" value="female"> Female
+            <input class="item-gender" type="radio" name="client_gender" id="other" value="other"> Other
+            <span gender="{{client.client_gender}}" id="gender-given" hidden></span>
+        </div>
+
+        {{!-- Client address --}}
+        <div class="form-group">
+            <label for="client_address" class="font-weight-bold">Address</label>
+            <input type="text" class="form-control" name="client_address" value="{{client.client_address}}">
+        </div>
+        
+        {{!-- Client phone --}}
+        <div class="form-group">
+            <label for="client_phone" class="font-weight-bold">Phone</label>
+            <input type="text" class="form-control" name="client_phone" value="{{client.client_phone}}">
+        </div>
+
+        {{!-- Client mail --}}
+        <div class="form-group">
+            <label for="client_mail" class="font-weight-bold">Mail</label>
+            <input type="text" class="form-control" name="client_mail" value="{{client.client_mail}}">
+        </div>
+
+        {{!-- Client nationality --}}
+        <div class="form-group">
+            <label for="client_nationality" class="font-weight-bold">Nationality</label>
+            <input type="text" class="form-control" name="client_nationality" value="{{client.client_nationality}}">
+        </div>
+
+        <div class="form-doc">
+            {{!-- Client document --}}
+            <div class="form-group form-doc-element">
+                <label for="client_doc" class="font-weight-bold form-doc-element-text">Document</label>
+                <input type="text" class="form-control" name="client_doc" value="{{client.client_doc}}">
+            </div>
+
+            {{!-- Client number --}}
+            <div class="form-group form-doc-element">
+                <label for="client_number" class="font-weight-bold form-doc-element-text">Number</label>
+                <input type="text" class="form-control" name="client_number" value="{{client.client_number}}">
+            </div>
+
+            {{!-- Client validity --}}
+            <div class="form-group form-doc-element">
+                <label for="client_validity" class="font-weight-bold form-doc-element-text">Validity</label>
+                <input type="date" class="form-control" name="client_validity">
+            </div>
+        </div>
+        
+
+        
+        
+        <button type="submit" class="btn btn-submit">Save</button>
+    </form>
+
+</div>
+
+<script>
+    var gender = document.getElementById('gender-given');
+    document.getElementById( gender.getAttribute('gender')).setAttribute('checked', 'checked');
+
+
+    
+    var dateControl = document.querySelector('input[type="date"]');
+    console.log(dateControl);
+    var date = new Date('{{client.client_validity}}');
+    var dateDocument = (date.getDate() < 10) ? '0'+date.getDate() : date.getDate();
+    var monthDocument = ((date.getMonth()+1) < 10) ? '0'+(date.getMonth()+1) : (date.getMonth()+1);
+    var dateStr = date.getFullYear() + '-' + monthDocument + '-' + dateDocument;
+    console.log(dateStr);
+    dateControl.setAttribute('value', dateStr);
+
+</script>

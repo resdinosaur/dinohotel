@@ -1,0 +1,106 @@
+
+<div class="mt-4 container">
+    <div class="">
+        <h1 class="title-page">Корзина клерков (Clerk)</h1>
+        <a href="/admin/clerk" class="btn-funtion">
+            <i class="fas fa-chevron-left"></i>
+            Вернуться к списку
+        </a>
+    </div>
+
+    <table class="table mt-4 table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">First Name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Gender</th>
+                <th scope="col">Address</th>
+                <th scope="col">Phone</th>
+                <th class="text-center">Funtion</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each clerks}}
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.clerk_firstName}}</td>
+                <td>{{this.clerk_lastName}}</td>
+                <td>{{this.clerk_gender}}</td>
+                <td>{{this.clerk_address}}</td>
+                <td>{{this.clerk_phone}}</td>
+                <td class="text-center">
+                    <a href="" class="btn-funtion record-funtion btn-restore" data-id="{{this._id}}">Восстановить</a>
+                    <a href="" class="btn-funtion record-funtion" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-clerk-modal">Удалить</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td colspan="7" class="text-center">Дат в корзине нет.</td>
+            </tr>
+
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-form" method="POST"></form>
+{{!-- Restore form hidden --}}
+<form name="restore-form" method="POST"></form>
+
+{{!-- Confirm delete room-type --}}
+<div id="delete-clerk-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удалить НАВСЕГДА клерка (Clerk)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы не можете восстановить это действие. Пожалуйста подумайте ещё раз. Вы уверены, что хотите <span style="font-weight: bold;">удалить навсегда</span>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="btn-delete" type="button" class="btn btn-danger">Удалить навсегда</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteId;
+        var deleteForm = document.forms['delete-form'];
+        var restoreForm = document.forms['restore-form'];
+        var btnRestore = $('.btn-restore');
+
+        //when clicked btn delete
+        $('#delete-clerk-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteId = button.data('id');
+        })
+
+        //when clicked dialog confirm
+        var btnDelete = document.getElementById('btn-delete');
+        btnDelete.onclick = function() {
+            deleteForm.action = '/admin/clerk/' + deleteId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        //restore btn clicked
+        btnRestore.click(function(e) {
+            e.preventDefault();
+
+            var restoreId = $(this).data('id');
+
+            restoreForm.action = '/admin/clerk/' + restoreId + '/restore?_method=PATCH';
+            restoreForm.submit();
+        });
+    });
+
+    
+</script>

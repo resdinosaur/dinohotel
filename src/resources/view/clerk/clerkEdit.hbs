@@ -1,0 +1,48 @@
+<div class="mt-4 container">
+    <h1 class="title-page">Редактировать нового клерка (Clerk)</h1>
+
+    <form method="POST" action="/admin/clerk/{{clerk._id}}/?_method=PUT">
+        {{!-- Clerk first name --}}
+        <div class="form-group">
+            <label for="clerk_firstName" class="font-weight-bold">First name</label>
+            <input type="text" class="form-control" name="clerk_firstName" value="{{clerk.clerk_firstName}}">
+        </div>
+
+        {{!-- Clerk last name --}}
+        <div class="form-group">
+            <label for="clerk_lastName" class="font-weight-bold">Last name</label>
+            <input type="text" class="form-control" name="clerk_lastName" value="{{clerk.clerk_lastName}}">
+        </div>
+
+        {{!-- Clerk gender --}}
+        <div class="form-group">
+            <label for="clerk_gender" class="font-weight-bold">Gender</label>
+            <input class="item-gender" type="radio" name="clerk_gender" id="male" value="male"> Male
+            <input class="item-gender" type="radio" name="clerk_gender" id="female" value="female"> Female
+            <input class="item-gender" type="radio" name="clerk_gender" id="other" value="other"> Other
+            <span gender="{{clerk.clerk_gender}}" id="gender-given" hidden></span>
+        </div>
+
+        {{!-- Clerk address --}}
+        <div class="form-group">
+            <label for="clerk_address" class="font-weight-bold">Address</label>
+            <input type="text" class="form-control" name="clerk_address" value="{{clerk.clerk_address}}">
+        </div>
+        
+        {{!-- Clerk phone --}}
+        <div class="form-group">
+            <label for="clerk_phone" class="font-weight-bold">Phone</label>
+            <input type="text" class="form-control" name="clerk_phone" value="{{clerk.clerk_phone}}">
+        </div>
+
+        
+        
+        <button type="submit" class="btn btn-submit">Save</button>
+    </form>
+
+</div>
+
+<script>
+    var gender = document.getElementById('gender-given');
+    document.getElementById( gender.getAttribute('gender')).setAttribute('checked', 'checked');
+</script>

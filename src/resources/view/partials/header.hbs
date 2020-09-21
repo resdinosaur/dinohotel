@@ -1,0 +1,43 @@
+{{!-- navbar-light bg-light --}}
+<nav class="navbar navbar-expand-lg ">
+  <div class="nav-content container">
+    <a class="navbar-brand" href="#">
+      <img class="logo" src="/img/logo.png" alt="">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto nav-ul">
+        <li class="nav-item active">
+          <a class="header-nav-link" href="#">Главная <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="header-nav-link" href="#">Комнаты <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="header-nav-link" href="#">Фотографии <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="header-nav-link" href="#">Забронировать <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="header-nav-link" href="#">Отзывы <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="header-nav-link" href="#">Контакты <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+      <div class="login-logout">
+          <a href="/admin" class="login">
+            Войти
+            <i class="fas fa-sign-in-alt"></i>
+          </a>
+          {{!-- <span>/</span>
+          <a href="#" class="logout">Выйти</a> --}}
+      </div>
+    </div>
+  </div>
+</nav>

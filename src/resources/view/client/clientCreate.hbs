@@ -1,0 +1,75 @@
+<div class="mt-4 container mb-4">
+    <h1 class="title-page">Создать нового клиентов (Client)</h1>
+
+    <form method="POST" action="/admin/client/store" >
+        {{!-- Client first name --}}
+        <div class="form-group">
+            <label for="client_firstName" class="font-weight-bold">First name</label>
+            <input type="text" class="form-control" name="client_firstName">
+        </div>
+
+        {{!-- Client last name --}}
+        <div class="form-group">
+            <label for="client_lastName" class="font-weight-bold">Last name</label>
+            <input type="text" class="form-control" name="client_lastName">
+        </div>
+
+        {{!-- Client gender --}}
+        <div class="form-group">
+            <label for="client_gender" class="font-weight-bold">Gender</label>
+            <input class="item-gender" type="radio" name="client_gender" value="male"> Male
+            <input class="item-gender" type="radio" name="client_gender" value="female"> Female
+            <input class="item-gender" type="radio" name="client_gender" value="other"> Other
+        </div>
+
+        {{!-- Client address --}}
+        <div class="form-group">
+            <label for="client_address" class="font-weight-bold">Address</label>
+            <input type="text" class="form-control" name="client_address">
+        </div>
+        
+        {{!-- Client phone --}}
+        <div class="form-group">
+            <label for="client_phone" class="font-weight-bold">Phone</label>
+            <input type="text" class="form-control" name="client_phone">
+        </div>
+
+        {{!-- Client mail --}}
+        <div class="form-group">
+            <label for="client_mail" class="font-weight-bold">Mail</label>
+            <input type="text" class="form-control" name="client_mail">
+        </div>
+
+        {{!-- Client nationality --}}
+        <div class="form-group">
+            <label for="client_nationality" class="font-weight-bold">Nationality</label>
+            <input type="text" class="form-control" name="client_nationality">
+        </div>
+
+        <div class="form-doc">
+            {{!-- Client document --}}
+            <div class="form-group form-doc-element">
+                <label for="client_doc" class="font-weight-bold form-doc-element-text">Document</label>
+                <input type="text" class="form-control" name="client_doc" >
+            </div>
+
+            {{!-- Client number --}}
+            <div class="form-group form-doc-element">
+                <label for="client_number" class="font-weight-bold form-doc-element-text">Number</label>
+                <input type="text" class="form-control" name="client_number">
+            </div>
+
+            {{!-- Client validity --}}
+            <div class="form-group form-doc-element">
+                <label for="client_validity" class="font-weight-bold form-doc-element-text">Validity</label>
+                <input type="date" class="form-control" name="client_validity">
+            </div>
+        </div>
+        
+
+        
+        
+        <button type="submit" class="btn btn-submit">Create</button>
+    </form>
+
+</div>

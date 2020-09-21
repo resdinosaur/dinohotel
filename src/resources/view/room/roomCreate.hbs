@@ -1,0 +1,26 @@
+<div class="mt-4 container">
+    <h1 class="title-page">Создать новый комнаты (Room)</h1>
+
+    <form method="POST" action="/admin/room/store" >
+        {{!-- Room number --}}
+        <div class="form-group">
+            <label for="room_number" class="font-weight-bold">Room number</label>
+            <input type="text" class="form-control" name="room_number">
+        </div>
+
+        {{!-- Room type name - get id --}}
+        <div class="form-group">
+            <label for="room_type_id" class="font-weight-bold">Room type</label>
+            <select class="form-control" id="room_type_id" name="room_type_id">
+
+                {{#each room_types}}
+                <option value="{{this._id}}">{{this.room_type_name}}</option>
+                {{/each}}
+
+            </select>
+        </div>
+        
+        <button type="submit" class="btn btn-submit">Create</button>
+    </form>
+
+</div>

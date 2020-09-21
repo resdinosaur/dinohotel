@@ -1,0 +1,42 @@
+<div class="mt-4 container">
+    <h1 class="title-page">Создать нового клерка (Clerk)</h1>
+
+    <form method="POST" action="/admin/clerk/store" >
+        {{!-- Clerk first name --}}
+        <div class="form-group">
+            <label for="clerk_firstName" class="font-weight-bold">First name</label>
+            <input type="text" class="form-control" name="clerk_firstName">
+        </div>
+
+        {{!-- Clerk last name --}}
+        <div class="form-group">
+            <label for="clerk_lastName" class="font-weight-bold">Last name</label>
+            <input type="text" class="form-control" name="clerk_lastName">
+        </div>
+
+        {{!-- Clerk gender --}}
+        <div class="form-group">
+            <label for="clerk_gender" class="font-weight-bold">Gender</label>
+            <input class="item-gender" type="radio" name="clerk_gender" value="male"> Male
+            <input class="item-gender" type="radio" name="clerk_gender" value="female"> Female
+            <input class="item-gender" type="radio" name="clerk_gender" value="other"> Other
+        </div>
+
+        {{!-- Clerk address --}}
+        <div class="form-group">
+            <label for="clerk_address" class="font-weight-bold">Address</label>
+            <input type="text" class="form-control" name="clerk_address">
+        </div>
+        
+        {{!-- Clerk phone --}}
+        <div class="form-group">
+            <label for="clerk_phone" class="font-weight-bold">Phone</label>
+            <input type="text" class="form-control" name="clerk_phone">
+        </div>
+
+        
+        
+        <button type="submit" class="btn btn-submit">Create</button>
+    </form>
+
+</div>

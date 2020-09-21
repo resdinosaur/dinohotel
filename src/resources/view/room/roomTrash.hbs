@@ -1,0 +1,124 @@
+
+<div class="mt-4 container">
+    <div class="">
+        <h1 class="title-page">Корзина комнат (Room)</h1>
+        <a href="/admin/room" class="btn-funtion">
+            <i class="fas fa-chevron-left"></i>
+            Вернуться к списку
+        </a>
+    </div>
+
+    <table class="table mt-4 table-striped">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Room number</th>
+                <th scope="col">Room type</th>
+                <th scope="col">Room situation</th>
+                <th class="text-center">Funtion</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {{#each rooms}} 
+            <tr>
+                <th scope="row">{{sum @index 1}}</th>
+                <td>{{this.room_number}}</td>
+                <td class="room-type-id" roomTypeId="{{this.room_type_id}}"></td>
+                <td>{{this.room_situation}}</td>
+                <td class="text-center">
+                    <a href="" class="btn-funtion record-funtion btn-restore" data-id="{{this._id}}">Восстановить</a>
+                    <a href="" class="btn-funtion record-funtion" data-toggle="modal" data-id="{{this._id}}" data-target="#delete-room-modal">Удалить</a>
+                </td>
+            </tr>
+            {{else}}
+            <tr>
+                <td scope="row" colspan="5" class="text-center">Дат в списке нет.</td>
+            </tr>
+
+            {{/each}}
+
+        </tbody>
+    </table>
+
+    <div class="data-room-type-hidden" style="display: none;">
+        {{#each room_types}}
+            <span class="data-room-rype" data-roomTypeId="{{this._id}}" data-roomTypeName="{{this.room_type_name}}"></span>
+        {{/each}}
+    </div>
+
+</div>
+
+{{!-- Delete form hidden --}}
+<form name="delete-form" method="POST"></form>
+{{!-- Restore form hidden --}}
+<form name="restore-form" method="POST"></form>
+
+{{!-- Confirm delete room-type --}}
+<div id="delete-room-modal" class="modal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Удалить НАВСЕГДА комнату (Room)</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Вы не можете восстановить это действие. Пожалуйста подумайте ещё раз. Вы уверены, что хотите <span style="font-weight: bold;">удалить навсегда</span>?</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button id="btn-delete" type="button" class="btn btn-danger">Удалить навсегда</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var deleteId;
+        var deleteForm = document.forms['delete-form'];
+        var restoreForm = document.forms['restore-form'];
+        var btnRestore = $('.btn-restore');
+
+        //get room_type_name 
+        var roomTypeId_roomClt = document.getElementsByClassName('room-type-id');
+        var roomTypeId_roomTypeClt = document.getElementsByClassName('data-room-rype');
+
+        for (var i = 0; i < roomTypeId_roomClt.length; i++) {
+            for (var j = 0; j < roomTypeId_roomTypeClt.length; j++) {
+                if (roomTypeId_roomClt[i].getAttribute('roomTypeId') == roomTypeId_roomTypeClt[j].getAttribute('data-roomTypeId')) {
+                    var text = roomTypeId_roomTypeClt[j].getAttribute('data-roomTypeName');
+                    roomTypeId_roomClt[i].innerText = text;
+                    break;
+                }
+            }
+        }
+
+        //when clicked btn delete
+        $('#delete-room-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            deleteId = button.data('id');
+        })
+
+        //when clicked dialog confirm
+        var btnDelete = document.getElementById('btn-delete');
+        btnDelete.onclick = function() {
+            deleteForm.action = '/admin/room/' + deleteId + '/force?_method=DELETE';
+            deleteForm.submit();
+        }
+
+        //restore btn clicked
+        btnRestore.click(function(e) {
+            e.preventDefault();
+
+            var restoreId = $(this).data('id');
+
+            restoreForm.action = '/admin/room/' + restoreId + '/restore?_method=PATCH';
+            restoreForm.submit();
+        });
+    });
+
+    
+</script>
